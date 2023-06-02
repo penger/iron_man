@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Neovis.js Example</title>
+  <script src="https://unpkg.com/neovis.js"></script>
+</head>
+<body>
+  <div id="visualization"></div>
+  <script>
+    var config = {
+      container_id: "visualization",
+      server_url: "bolt://192.168.1.123:7687",
+      server_user: "neo4j",
+      server_password: "happy_cassini",
+      labels: {
+        "Person": {
+          "caption": "name",
+          "size": "pagerank"
+        }
+      },
+      relationships: {
+        "FRIENDS_WITH": {
+          "thickness": "weight",
+          "caption": false
+        }
+      },
+      initial_cypher: "MATCH (n:Person)-[r:FRIENDS_WITH]-(m:Person) RETURN n,r,m"
+    };
+
+    var viz = new NeoVis.default(config);
+    viz.render();
+  </script>
+</body>
+</html>

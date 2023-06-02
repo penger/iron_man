@@ -1,0 +1,87 @@
+
+    <html>
+    <head>
+
+        <script src="{{ url_for('static', filename='js/vis.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+        <link href="{{ url_for('static',filename='css/vis.css')}}" rel="stylesheet" type="text/css">
+<!--        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    </head>
+    <body>
+
+    <div id="VIS_draw"></div>
+
+    <script type="text/javascript">
+      var container = document.getElementById("VIS_draw");
+      var nodes, edges
+      function startNetwork(){
+
+          var options = {
+              nodes: {
+                  shape: 'circle',
+                  size: 25,
+                  font: {
+                      size: 15
+                  }
+                  ,shadow: true
+              },
+              edges: {
+                  font: {
+                      size: 10,
+                      align: 'top'
+                  },
+                  color: 'grey',
+                  arrows: {
+                      to: {enabled: true, scaleFactor: 1.2}
+                  },
+                  smooth: {enabled: true}
+                  ,shadow: true
+              },
+              physics: {
+                  enabled: true,
+                  wind:{
+                      x:1,
+                      y:0
+                  }
+              }
+          };
+
+          nodes = new vis.DataSet({{ nodes|tojson }})
+          edges = new vis.DataSet({{ edges|tojson }})
+          var data ={
+              nodes:nodes,
+              edges:edges
+          }
+
+          var network = new vis.Network(container, data, options);
+      }
+
+      function changeNode(){
+          nodes.update([{id:'start',color:'red'}])
+      }
+
+      startNetwork();
+
+      function runEvery2Sec(){
+          //每隔 2s 运行一次
+          setTimeout(runEvery2Sec,2*1000)
+          $.ajax(
+              {
+                  'url':'/getnodes',
+                  'type':'GET',
+                  'success':function(data){
+                      nodes.update(data)
+                      console.log("运行一次获取"+ data)
+                  }
+              }
+          )
+      }
+      //启动每次运行
+      runEvery2Sec();
+
+
+    </script>
+    <button onclick="changeNode()">改变颜色</button>
+    </body>
+    </html>
+    

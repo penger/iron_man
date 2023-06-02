@@ -1,0 +1,54 @@
+
+    <html>
+    <head>
+
+        <script src="{{ url_for('static', filename='js/vis.js') }}"></script>
+<!--        <script src="{{ url_for('static', filename='js/vis-network.min.js') }}"></script>-->
+        <link href="{{ url_for('static',filename='css/vis.css')}}" rel="stylesheet" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+    </head>
+    <body>
+
+    <div id="VIS_draw"></div>
+
+    <script type="text/javascript">
+      var nodes = [{'group': 'Event', 'id': 38, 'label': '昏迷'}, {'group': 'Event', 'id': 19, 'label': '关键词'}, {'group': 'Event', 'id': 2, 'label': '拥有'}, {'group': 'Event', 'id': 4, 'label': '世界'}, {'group': 'Event', 'id': 6, 'label': '希望'}, {'group': 'Event', 'id': 8, 'label': '阳光'}, {'group': 'Event', 'id': 10, 'label': '暖男'}, {'group': 'Event', 'id': 12, 'label': '喜欢'}, {'group': 'Event', 'id': 14, 'label': '动物'}, {'group': 'Event', 'id': 32, 'label': '综艺'}, {'group': 'Event', 'id': 18, 'label': '无效'}, {'group': 'Event', 'id': 20, 'label': '今年'}, {'group': 'Event', 'id': 39, 'label': '高频词'}, {'group': 'Event', 'id': 40, 'label': '中国'}, {'group': 'Event', 'id': 24, 'label': '娱乐圈'}, {'group': 'Event', 'id': 26, 'label': '去世'}, {'group': 'Event', 'id': 28, 'label': '翔因'}, {'group': 'Event', 'id': 30, 'label': '录制'}, {'group': 'Event', 'id': 34, 'label': '节目'}, {'group': 'Event', 'id': 36, 'label': '过程'}, {'group': 'Event', 'id': 41, 'label': '地名'}, {'group': 'Event', 'id': 42, 'label': '翔'}, {'group': 'Event', 'id': 45, 'label': '人物'}, {'group': 'Event', 'id': 44, 'label': '高以翔'}];
+      var edges = [{'from': 38, 'label': '', 'to': 19}, {'from': 2, 'label': '', 'to': 19}, {'from': 4, 'label': '', 'to': 19}, {'from': 6, 'label': '', 'to': 19}, {'from': 8, 'label': '', 'to': 19}, {'from': 10, 'label': '', 'to': 19}, {'from': 12, 'label': '', 'to': 19}, {'from': 14, 'label': '', 'to': 19}, {'from': 32, 'label': '', 'to': 19}, {'from': 18, 'label': '', 'to': 19}, {'from': 20, 'label': '', 'to': 39}, {'from': 40, 'label': '', 'to': 39}, {'from': 24, 'label': '', 'to': 39}, {'from': 26, 'label': '', 'to': 39}, {'from': 28, 'label': '', 'to': 39}, {'from': 30, 'label': '', 'to': 39}, {'from': 32, 'label': '', 'to': 39}, {'from': 34, 'label': '', 'to': 39}, {'from': 36, 'label': '', 'to': 39}, {'from': 38, 'label': '', 'to': 39}, {'from': 40, 'label': '', 'to': 41}, {'from': 42, 'label': '', 'to': 45}, {'from': 44, 'label': '', 'to': 45}];
+
+      var container = document.getElementById("VIS_draw");
+
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+
+      var options = {
+          nodes: {
+              shape: 'circle',
+              size: 15,
+              font: {
+                  size: 15
+              }
+          },
+          edges: {
+              font: {
+                  size: 10,
+                  align: 'top'
+              },
+              color: 'red',
+              arrows: {
+                  to: {enabled: true, scaleFactor: 1.2}
+              },
+              smooth: {enabled: true}
+          },
+          physics: {
+              enabled: true
+          }
+      };
+
+      var network = new vis.Network(container, data, options);
+
+    </script>
+    </body>
+    </html>
+    

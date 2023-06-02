@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <title>Neovis.js Simple Example</title>
+    <style type="text/css">
+        html, body {
+            font: 16pt arial;
+        }
+
+        #viz {
+            width: 1600px;
+            height: 900px;
+            border: 1px solid lightgray;
+            font: 22pt arial;
+        }
+
+    </style>
+
+    <!-- FIXME: load from dist -->
+    <script src="{{ url_for('static', filename='js/neovis.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<!--    <script-->
+<!--            src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"-->
+<!--            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="-->
+<!--            crossorigin="anonymous"></script>-->
+
+    <script type="text/javascript">
+		// define config car
+		// instantiate nodevis object
+		// draw
+
+		var viz;
+
+		function draw() {
+			var config = {
+				containerId: "viz",
+				neo4j: {
+					serverUrl: "bolt://192.168.1.123:7687",
+					serverUser: "neo4j",
+					serverPassword: "happy_cassini"
+				},
+                visConfig:{
+                    nodes:{
+                        shape:'circle'
+                    },
+                    edges:{
+                        arrows:{
+                            to:{enable:true}
+                        }
+                    }
+                },
+				labels: {
+					ProcessInstance: {
+						label: 'desc',
+						title: 'name',
+					},
+                    TaskInstance:{
+                        label: 'name',
+                        color: 'color',
+                        value: 'weight'
+                    }
+				},
+				relationships: {
+					NEXT: {
+						value: 'weight',
+					}
+				},
+				initialCypher: 'match(n:TaskInstance)-[r]-(m:TaskInstance) return n,m,r'
+			};
+
+			viz = new NeoVis.default(config);
+			viz.render();
+			console.log(viz);
+
+		}
+    </script>
+</head>
+<body onload="draw()">
+<div id="viz"></div>
+
+
+Cypher query: <textarea rows="4" cols=50 id="cypher"></textarea><br>
+<input type="submit" value="Submit" id="reload">
+<input type="submit" value="Stabilize" id="stabilize">
+
+
+</body>
+
+<script>
+	$("#reload").click(function () {
+
+		var cypher = $("#cypher").val();
+
+		if (cypher.length > 3) {
+			viz.renderWithCypher(cypher);
+		} else {
+			console.log("reload");
+			viz.reload();
+
+		}
+
+	});
+
+	$("#stabilize").click(function () {
+		viz.stabilize();
+	})
+
+</script>
+</html>

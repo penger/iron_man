@@ -1,0 +1,61 @@
+
+    <html>
+    <head>
+        <script src="{{ url_for('static', filename='js/vis.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+        <link href="{{ url_for('static',filename='css/vis.css')}}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+    <script>
+        function startNetwork(){
+            var container = document.getElementById("VIS_draw");
+            var options = {
+                nodes: {
+                    shape: 'circle',
+                    size: 25,
+                    font: {
+                        size: 15
+                    }
+                    ,shadow: true
+                },
+                edges: {
+                    font: {
+                        size: 10,
+                        align: 'top'
+                    },
+                    color: 'grey',
+                    arrows: {
+                        to: {enabled: true, scaleFactor: 1.2}
+                    },
+                    smooth: {enabled: true}
+                    ,shadow: true
+                },
+                physics: {
+                    enabled: true,
+                    wind:{
+                        x:1,
+                        y:0
+                    }
+                }
+            };
+
+            var nodes = [{'group': 'Event', 'id': 22, 'label': '����Ѹ'}, {'group': 'Event', 'id': 5, 'label': '�ؼ���'}, {'group': 'Event', 'id': 23, 'label': '�ܽ���'}, {'group': 'Event', 'id': 12, 'label': 'һ��'}, {'group': 'Event', 'id': 7, 'label': '�Է�����'}, {'group': 'Event', 'id': 15, 'label': '��Ƶ��'}, {'group': 'Event', 'id': 14, 'label': '������'}, {'group': 'Event', 'id': 19, 'label': '����'}];
+            var edges = [{'from': 22, 'label': '', 'to': 5}, {'from': 23, 'label': '', 'to': 5}, {'from': 12, 'label': '', 'to': 5}, {'from': 23, 'label': '', 'to': 7}, {'from': 23, 'label': '', 'to': 15}, {'from': 22, 'label': '', 'to': 15}, {'from': 12, 'label': '', 'to': 15}, {'from': 14, 'label': '', 'to': 15}, {'from': 23, 'label': '', 'to': 19}, {'from': 22, 'label': '', 'to': 19}, {'from': 23, 'label': '', 'to': 22}, {'from': 22, 'label': '', 'to': 23}];
+
+            var data ={
+                nodes: nodes,
+                edges: edges
+            }
+
+            var network = new vis.Network(container, data, options);
+
+        }
+
+        startNetwork()
+    </script>
+    <div id="VIS_draw"></div>
+    <div id="VIS_text">${{ nodes }}</div>
+
+    </body>
+    </html>
+    
